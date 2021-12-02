@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useState } from 'react';
 import { useAuth } from '../../auth';
 import './ResetPassword.css';
 
@@ -34,21 +34,31 @@ const ResetPassword = () => {
     }
   };
 
+  const [passwordsMatch, setPasswordsMatch] = useState(true);
+
   const [credentials, dispatch] = useReducer(reducer, initialCredentials);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(credentials);
+    if (credentials.newPassword === credentials.newPasswordVerification) {
+      setPasswordsMatch(true);
+      console.log(credentials);
+    } else {
+      setPasswordsMatch(false);
+    }
   };
   return (
-    <form>
-      <label htmlFor="currentPassword">Curret Password:</label>
-      <input type="password" id="currentPassword" onChange={(e) => dispatch({ type: 'password', payload: e.target.value })} />
-      <label htmlFor="newPassword">New Password:</label>
-      <input type="password" id="newPassword" onChange={(e) => dispatch({ type: 'newPassword', payload: e.target.value })} />
-      <label htmlFor="newPasswordVerification">Re-enter New Password</label>
-      <input type="password" id="newPasswordVerification" onChange={(e) => dispatch({ type: 'newPasswordVerification', payload: e.target.value })} />
-      <button type="submit" onClick={(e) => handleSubmit(e)}>Submit</button>
-    </form>
+    <>
+      {!passwordsMatch ? <h3>{'The passwords didn\'t match.  Please try again.'}</h3> : null}
+      <form>
+        <label htmlFor="currentPassword">Curret Password:</label>
+        <input type="password" id="currentPassword" onChange={(e) => dispatch({ type: 'password', payload: e.target.value })} />
+        <label htmlFor="newPassword">New Password:</label>
+        <input type="password" id="newPassword" onChange={(e) => dispatch({ type: 'newPassword', payload: e.target.value })} />
+        <label htmlFor="newPasswordVerification">Re-enter New Password</label>
+        <input type="password" id="newPasswordVerification" onChange={(e) => dispatch({ type: 'newPasswordVerification', payload: e.target.value })} />
+        <button type="submit" onClick={(e) => handleSubmit(e)}>Submit</button>
+      </form>
+    </>
   );
 };
 
