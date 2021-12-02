@@ -18,9 +18,16 @@ const LandingPage = () => {
         </button>
       </Link> */}
       {auth.user || auth.user === '' ? (
-        <button type="button" onClick={handleLogout}>
-          Logout
-        </button>
+        <>
+          <button type="button" onClick={handleLogout}>
+            Logout
+          </button>
+          <Link to="/reset-password">
+            <button type="button">
+              Reset Password
+            </button>
+          </Link>
+        </>
       )
         : (
           <Link to="/login">

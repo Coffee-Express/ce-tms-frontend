@@ -6,6 +6,7 @@ import TicketLog from './components/TicketLog/TicketLog';
 import LandingPage from './components/LandingPage/LandingPage';
 import CreateAccount from './components/CreateAccount/CreateAccount';
 import Login from './components/Login/Login';
+import ResetPassword from './components/ResetPassword/ResetPassword';
 import './App.css';
 
 const App = () => (
@@ -28,6 +29,14 @@ const App = () => (
           element={(
             <RequireAuth>
               <TicketLog />
+            </RequireAuth>
+          )}
+        />
+        <Route
+          path="/reset-password"
+          element={(
+            <RequireAuth>
+              <ResetPassword />
             </RequireAuth>
           )}
         />
