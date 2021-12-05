@@ -5,10 +5,10 @@ import {
 import '@testing-library/jest-dom';
 import CreateAccount from './CreateAccount';
 
-test('should update username value on username input change', () => {
+test('should update email value on email input change', () => {
   render(<CreateAccount />);
-  fireEvent.change(screen.getByLabelText('Username'), { target: { value: 'a' } });
-  expect(screen.getByLabelText('Username')).toHaveValue('a');
+  fireEvent.change(screen.getByLabelText('email'), { target: { value: 'a' } });
+  expect(screen.getByLabelText('email')).toHaveValue('a');
 });
 
 test('should update password value on password input change', () => {

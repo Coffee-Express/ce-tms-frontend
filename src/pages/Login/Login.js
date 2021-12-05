@@ -1,25 +1,26 @@
 import React, { useReducer, useState } from 'react';
+import PropTypes from 'prop-types';
 import { Navigate, Link } from 'react-router-dom';
 // import axios from 'axios';
 import './Login.css';
 import Modal from '../../components/reusableComponents/Modal';
 import CreateAccount from '../../components/CreateAccount/CreateAccount';
-import { useAuth } from '../../auth';
+// import { useAuth } from '../../auth';
 
-const Login = () => {
+const Login = ({ user }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const initialCredentials = {
-    username: '',
+    email: '',
     password: '',
   };
 
   const reducer = (state, action) => {
     switch (action.type) {
-      case 'username':
+      case 'email':
         return {
           ...state,
-          username: action.payload,
+          email: action.payload,
         };
       case 'password':
         return {
@@ -33,11 +34,11 @@ const Login = () => {
 
   const [credentials, dispatch] = useReducer(reducer, initialCredentials);
 
-  const auth = useAuth();
+  // const auth = useAuth();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    auth.signin(credentials.username);
+  const handleSubmit = async () => {
+    // auth.signin(credentials.email);
+    window.localStorage.setItem('user', JSON.stringify({ name: credentials.email, email: credentials.email }));
   };
 
   const closeCreateAccountForm = () => {
@@ -48,10 +49,12 @@ const Login = () => {
     closeCreateAccountForm();
   };
 
-  if (auth.user) {
-    return <Navigate to="/view-tickets" />;
-  }
-  if (auth.user === '') {
+  // if (user) {
+  //   return <Navigate to="/view-tickets" />;
+  // }
+
+  // console.log(user);
+  if (user) {
     return <Navigate to="/create-ticket" />;
   }
 
@@ -71,10 +74,10 @@ const Login = () => {
                 <input
                   type="text"
                   className="login__input"
-                  placeholder="Username"
-                  id="login-form-username"
-                  value={credentials.username}
-                  onChange={(e) => dispatch({ type: 'username', payload: e.target.value })}
+                  placeholder="email"
+                  id="login-form-email"
+                  value={credentials.email}
+                  onChange={(e) => dispatch({ type: 'email', payload: e.target.value })}
                 />
               </div>
               <div className="login__field">
@@ -119,9 +122,9 @@ const Login = () => {
     </>
   //  <>
   //    <form>
-  //      <label htmlFor="login-form-username">Username</label>
-  //      <input type="text" id="login-form-username" value={credentials.username}
-  //       onChange={(e) => dispatch({ type: 'username', payload: e.target.value })} />
+  //      <label htmlFor="login-form-email">email</label>
+  //      <input type="text" id="login-form-email" value={credentials.email}
+  //       onChange={(e) => dispatch({ type: 'email', payload: e.target.value })} />
   //      <label htmlFor="login-form-password">Password</label>
   //      <input type="password" id="login-form-password" value={credentials.passsword}
   //      onChange={(e) => dispatch({ type: 'password', payload: e.target.value })} />
@@ -129,6 +132,17 @@ const Login = () => {
   //    </form>
   //  </>
   );
+};
+
+Login.propTypes = {
+  user: PropTypes.shape({
+    name: PropTypes.string,
+    email: PropTypes.string,
+  }),
+};
+
+Login.defaultProps = {
+  user: null,
 };
 
 export default Login;

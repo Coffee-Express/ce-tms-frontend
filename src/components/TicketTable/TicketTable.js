@@ -46,7 +46,7 @@ const tickets = [{
   title: 'bad port', description: 'apple', priority: '4', urgency: '9', date: '3/23/21',
 }];
 
-const TicketLog = () => {
+const TicketTable = () => {
   useEffect(() => {
     //   getTickets()
   }, []);
@@ -124,4 +124,5 @@ const TicketLog = () => {
     </div>
   );
 };
-export default TicketLog;
+
+export default TicketTable;

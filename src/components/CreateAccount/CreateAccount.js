@@ -10,7 +10,7 @@ const CreateAccount = (props) => {
 
   const initialCredentials = {
     name: '',
-    username: '',
+    email: '',
     password: '',
   };
 
@@ -21,10 +21,10 @@ const CreateAccount = (props) => {
           ...state,
           name: action.payload,
         };
-      case 'username':
+      case 'email':
         return {
           ...state,
-          username: action.payload,
+          email: action.payload,
         };
       case 'password':
         return {
@@ -42,13 +42,14 @@ const CreateAccount = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    auth.signin(credentials.username);
+    // auth.signin(credentials.email);
+    window.localStorage.setItem('user', { name: credentials.name, email: credentials.email });
     submitForm();
     // try {
     //   const response = await axios.post(`${process.env.REACT_APP_API_URL}
     // /create-account`, credentials, {
     //     headers: {
-    //       Authorization: `Basic ${credentials.username}:${credentials.password}`,
+    //       Authorization: `Basic ${credentials.email}:${credentials.password}`,
     //     },
     //   });
     //   return response.status;
@@ -70,8 +71,10 @@ const CreateAccount = (props) => {
       <form>
         <label type="text" htmlFor="create-account-form-name">Name</label>
         <input id="create-account-form-name" onChange={(e) => dispatch({ type: 'name', payload: e.target.value })} />
-        <label type="text" htmlFor="create-account-form-username">Username</label>
-        <input id="create-account-form-username" onChange={(e) => dispatch({ type: 'username', payload: e.target.value })} />
+        <label type="text" htmlFor="create-account-form-email">Email</label>
+        <input id="create-account-form-email" onChange={(e) => dispatch({ type: 'email', payload: e.target.value })} />
+        <label type="text" htmlFor="create-account-form-email">email</label>
+        <input id="create-account-form-email" onChange={(e) => dispatch({ type: 'email', payload: e.target.value })} />
         <label htmlFor="create-account-form-password">Password</label>
         <input type="password" id="create-account-form-password" onChange={(e) => dispatch({ type: 'password', payload: e.target.value })} />
         <button type="submit" onClick={(e) => handleSubmit(e)}>Submit</button>

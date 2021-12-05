@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
-import { AuthProvider, RequireAuth } from './auth';
 import SubmitTicket from './pages/SubmitTicket/SubmitTicket';
 import ViewTickets from './pages/ViewTickets/ViewTickets';
 import NavBar from './components/NavBar/NavBar';
@@ -9,6 +8,7 @@ import Login from './pages/Login/Login';
 import './App.css';
 
 const App = () => {
+  const [user, setUser] = useState();
   window.onload = () => {
     // window.localStorage.setItem('user', window.localStorage.getItem('user'));
     const tabCounter = window.localStorage.getItem('tabCounter');
@@ -24,30 +24,33 @@ const App = () => {
     window.localStorage.setItem('tabCounter', tabCounter === null ? tabCounter - 1 : parseInt(tabCounter, 10) - 1);
     window.sessionStorage.setItem('refreshed', true);
   };
+
+  useEffect(() => {
+    setUser(window.localStorage.getItem('user'));
+  });
+
+  // console.log(user);
+
   return (
-    <AuthProvider>
-      <Routes>
-        <Route element={<NavBar />}>
-          <Route path="/" element={<Navigate to="/create-ticket" />} />
-          <Route path="/create-account" element={<CreateAccount />} />
-          <Route path="/login" element={<Login />} />
-          <Route
-            path="/create-ticket"
-            element={(
-              <SubmitTicket />
+    <Routes>
+      <Route element={<NavBar />}>
+        <Route path="/" element={<Navigate to="/create-ticket" />} />
+        <Route path="/create-account" element={<CreateAccount />} />
+        <Route path="/login" element={<Login user={user} />} />
+        <Route
+          path="/create-ticket"
+          element={(
+            <SubmitTicket />
       )}
-          />
-          <Route
-            path="/view-tickets"
-            element={(
-              <RequireAuth>
-                <ViewTickets />
-              </RequireAuth>
+        />
+        <Route
+          path="/view-tickets"
+          element={(
+            <ViewTickets user={user} />
           )}
-          />
-        </Route>
-      </Routes>
-    </AuthProvider>
+        />
+      </Route>
+    </Routes>
   );
 };
 
