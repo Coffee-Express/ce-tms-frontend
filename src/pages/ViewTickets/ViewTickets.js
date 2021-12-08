@@ -6,7 +6,7 @@ import './ViewTickets.css';
 
 const ViewTickets = ({ user }) => (
   <>
-    {user.name ? <TicketTable user={user} /> : <Navigate to="/login" />}
+    {user ? <TicketTable user={user} /> : <Navigate to="/login" />}
   </>
 );
 

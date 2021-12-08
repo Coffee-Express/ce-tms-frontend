@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import SubmitTicket from './pages/SubmitTicket/SubmitTicket';
 import ViewTickets from './pages/ViewTickets/ViewTickets';
@@ -8,35 +8,52 @@ import Login from './pages/Login/Login';
 import './App.css';
 
 const App = () => {
-  const [user, setUser] = useState();
   window.onload = () => {
-    // window.localStorage.setItem('user', window.localStorage.getItem('user'));
-    const tabCounter = window.localStorage.getItem('tabCounter');
+    const numTabs = Number(window.localStorage.getItem('tabCounter'));
     if (!window.sessionStorage.getItem('refreshed')) {
-      if (tabCounter === null || parseInt(tabCounter, 10) < 1) {
+      if (numTabs < 1) {
         window.localStorage.removeItem('user');
       }
     }
-    window.localStorage.setItem('tabCounter', tabCounter === null ? tabCounter + 1 : parseInt(tabCounter, 10) + 1);
+    window.localStorage.setItem('tabCounter', numTabs + 1);
   };
+
+  const getUserFromlocalStorage = () => {
+    const user = window.localStorage.getItem('user');
+    try {
+      const JSONUser = JSON.parse(user);
+      return JSONUser;
+    } catch (error) {
+      return null;
+    }
+  };
+
+  const [user, setUser] = useState(getUserFromlocalStorage);
+
   window.onbeforeunload = () => {
-    const tabCounter = window.localStorage.getItem('tabCounter');
-    window.localStorage.setItem('tabCounter', tabCounter === null ? tabCounter - 1 : parseInt(tabCounter, 10) - 1);
+    const numTabs = Number(window.localStorage.getItem('tabCounter'));
+    window.localStorage.setItem('tabCounter', numTabs - 1);
     window.sessionStorage.setItem('refreshed', true);
   };
 
-  useEffect(() => {
-    setUser(window.localStorage.getItem('user'));
-  });
+  const signin = (newUser) => {
+    setUser(newUser);
+    window.localStorage.setItem('user', JSON.stringify(newUser));
+  };
+
+  const signout = () => {
+    setUser(null);
+    window.localStorage.removeItem('user');
+  };
 
   // console.log(user);
 
   return (
     <Routes>
-      <Route element={<NavBar />}>
+      <Route element={<NavBar user={user} signout={signout} />}>
         <Route path="/" element={<Navigate to="/create-ticket" />} />
         <Route path="/create-account" element={<CreateAccount />} />
-        <Route path="/login" element={<Login user={user} />} />
+        <Route path="/login" element={<Login user={user} signin={signin} />} />
         <Route
           path="/create-ticket"
           element={(

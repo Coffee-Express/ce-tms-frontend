@@ -1,20 +1,20 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 // import { useAuth } from '../../auth';
 import './NavBar.css';
 
-const NavBar = () => {
+const NavBar = ({ user, signout }) => {
   // const auth = useAuth();
-  const user = window.localStorage.getItem('user');
   const navigate = useNavigate();
   const handleLogout = () => {
     // auth.signout();
-    window.localStorage.removeItem('user');
+    signout();
     navigate('/login');
   };
   return (
     <div>
-      {window.localStorage.getItem('user') ? (
+      {user ? (
         <>
           <button type="button" onClick={handleLogout}>
             Logout
@@ -30,10 +30,22 @@ const NavBar = () => {
             </Link>
           </>
         )}
-      <p>{user ? JSON.parse(window.localStorage.getItem('user')).name : null}</p>
+      <p>{user ? user.name : null}</p>
       <Outlet />
     </div>
   );
+};
+
+NavBar.propTypes = {
+  user: PropTypes.shape({
+    name: PropTypes.string,
+    email: PropTypes.string,
+  }),
+  signout: PropTypes.func.isRequired,
+};
+
+NavBar.defaultProps = {
+  user: null,
 };
 
 export default NavBar;

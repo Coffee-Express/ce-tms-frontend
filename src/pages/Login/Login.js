@@ -7,7 +7,7 @@ import Modal from '../../components/reusableComponents/Modal';
 import CreateAccount from '../../components/CreateAccount/CreateAccount';
 // import { useAuth } from '../../auth';
 
-const Login = ({ user }) => {
+const Login = ({ user, signin }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const initialCredentials = {
@@ -38,7 +38,9 @@ const Login = ({ user }) => {
 
   const handleSubmit = async () => {
     // auth.signin(credentials.email);
-    window.localStorage.setItem('user', JSON.stringify({ name: credentials.email, email: credentials.email }));
+    // window.localStorage.setItem('user',
+    // JSON.stringify({ name: credentials.email, email: credentials.email }));
+    signin({ name: credentials.email, email: credentials.email });
   };
 
   const closeCreateAccountForm = () => {
@@ -139,6 +141,7 @@ Login.propTypes = {
     name: PropTypes.string,
     email: PropTypes.string,
   }),
+  signin: PropTypes.func.isRequired,
 };
 
 Login.defaultProps = {

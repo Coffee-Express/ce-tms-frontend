@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
+import PropTypes from 'prop-types';
 // import axios from 'axios';
 import './TicketTable.css';
 // import SubmitTicket from '../SubmitTicket/SubmitTicket';
@@ -46,8 +47,9 @@ const tickets = [{
   title: 'bad port', description: 'apple', priority: '4', urgency: '9', date: '3/23/21',
 }];
 
-const TicketTable = () => {
+const TicketTable = ({ user }) => {
   useEffect(() => {
+    console.log(user);
     //   getTickets()
   }, []);
   const { sortItems, requestSort } = useSortableData(tickets);
@@ -123,6 +125,13 @@ const TicketTable = () => {
       </table>
     </div>
   );
+};
+
+TicketTable.propTypes = {
+  user: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default TicketTable;
