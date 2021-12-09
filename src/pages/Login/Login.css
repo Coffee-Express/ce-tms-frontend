@@ -111,6 +111,10 @@
 	transition: .2s;
 }
 
+.failed-authentication {
+	border-color: red;
+}
+
 .login__input:active,
 .login__input:focus,
 .login__input:hover {

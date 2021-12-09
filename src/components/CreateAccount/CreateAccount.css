@@ -98,3 +98,7 @@ body {
  .sec-content {
    margin-top: 85%;
  }
+
+ .failed-account-creation {
+   border-color: red;
+ }

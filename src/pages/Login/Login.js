@@ -1,14 +1,15 @@
 import React, { useReducer, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Navigate, Link } from 'react-router-dom';
-// import axios from 'axios';
+import axios from 'axios';
 import './Login.css';
 import Modal from '../../components/reusableComponents/Modal';
 import CreateAccount from '../../components/CreateAccount/CreateAccount';
 // import { useAuth } from '../../auth';
 
 const Login = ({ user, signin }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCreateAccountModalOpen, setIsCreateAccountModalOpen] = useState(false);
+  const [authenticationStatusCSSClass, setAuthenticationStatusCSSClass] = useState('');
 
   const initialCredentials = {
     email: '',
@@ -34,17 +35,20 @@ const Login = ({ user, signin }) => {
 
   const [credentials, dispatch] = useReducer(reducer, initialCredentials);
 
-  // const auth = useAuth();
-
   const handleSubmit = async () => {
-    // auth.signin(credentials.email);
-    // window.localStorage.setItem('user',
-    // JSON.stringify({ name: credentials.email, email: credentials.email }));
-    signin({ name: credentials.email, email: credentials.email });
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/login`, credentials);
+      console.log(response.status);
+      setAuthenticationStatusCSSClass('successful-authentication');
+      signin({ name: credentials.email, email: credentials.email });
+    } catch (error) {
+      console.log(error.status);
+      setAuthenticationStatusCSSClass('failed-authentication');
+    }
   };
 
   const closeCreateAccountForm = () => {
-    setIsModalOpen(false);
+    setIsCreateAccountModalOpen(false);
   };
 
   const submitCreateAccountForm = () => {
@@ -55,7 +59,6 @@ const Login = ({ user, signin }) => {
   //   return <Navigate to="/view-tickets" />;
   // }
 
-  // console.log(user);
   if (user) {
     return <Navigate to="/create-ticket" />;
   }
@@ -75,7 +78,7 @@ const Login = ({ user, signin }) => {
                 <i className="login__icon fas fa-user" />
                 <input
                   type="text"
-                  className="login__input"
+                  className={`login__input ${authenticationStatusCSSClass}`}
                   placeholder="email"
                   id="login-form-email"
                   value={credentials.email}
@@ -86,7 +89,7 @@ const Login = ({ user, signin }) => {
                 <i className="login__icon fas fa-lock" />
                 <input
                   type="password"
-                  className="login__input"
+                  className={`login__input ${authenticationStatusCSSClass}`}
                   placeholder="Password"
                   id="login-form-password"
                   value={credentials.passsword}
@@ -100,10 +103,10 @@ const Login = ({ user, signin }) => {
             </form>
             <div className="social-login">
               Don&apos;t have an account with us?
-              <button type="button" onClick={() => setIsModalOpen(true)} className="button login__signup">Sign up</button>
-              {isModalOpen
+              <button type="button" onClick={() => setIsCreateAccountModalOpen(true)} className="button login__signup">Sign up</button>
+              {isCreateAccountModalOpen
                 ? (
-                  <Modal>
+                  <Modal onClose={closeCreateAccountForm}>
                     <CreateAccount
                       submitForm={submitCreateAccountForm}
                       closeForm={closeCreateAccountForm}
