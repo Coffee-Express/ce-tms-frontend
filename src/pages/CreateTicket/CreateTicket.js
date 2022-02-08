@@ -62,6 +62,11 @@ const CreateTicket = () => {
           description: '',
           email: '',
         };
+      case undefined:
+        return {
+          ...reducerState,
+          message: 'There was an unexpected error. Please try again later',
+        };
 
       default:
         return {
@@ -90,46 +95,54 @@ const CreateTicket = () => {
       priority: state.ticketPriority,
       urgency: state.ticketUrgency,
     };
+    // validate if other fields are empty
+    const email = guestEmail || auth.user.email;
+    if (validator.isEmpty(ticket.subject)) {
+      ticketDispatch({ type: 'subject', valid: false });
+      return;
+    }
+    ticketDispatch({ type: 'subject', valid: true });
+
+    // category validation
+    if (validator.isEmpty(ticket.category)) {
+      ticketDispatch({ type: 'category', valid: false });
+      return;
+    }
+    ticketDispatch({ type: 'category', valid: true });
+
+    // description validation
+    if (validator.isEmpty(ticket.description)) {
+      ticketDispatch({ type: 'description', valid: false });
+      return;
+    }
+    ticketDispatch({ type: 'description', valid: true });
+
+    // email validation
+    if (!validator.isEmail(guestEmail)) {
+      ticketDispatch({ type: 'email', valid: false });
+      return;
+    }
+    ticketDispatch({ type: 'email', valid: true });
+
     try {
-      // validate if other fields are empty
-      const email = guestEmail || auth.user.email;
-      if (validator.isEmpty(ticket.subject)) {
-        ticketDispatch({ type: 'subject', valid: false });
-        return;
-      }
-      ticketDispatch({ type: 'subject', valid: true });
-
-      // category validation
-      if (validator.isEmpty(ticket.category)) {
-        ticketDispatch({ type: 'category', valid: false });
-        return;
-      }
-      ticketDispatch({ type: 'category', valid: true });
-
-      // description validation
-      if (validator.isEmpty(ticket.description)) {
-        ticketDispatch({ type: 'description', valid: false });
-        return;
-      }
-      ticketDispatch({ type: 'description', valid: true });
-
-      // email validation
-      if (!validator.isEmail(guestEmail)) {
-        ticketDispatch({ type: 'email', valid: false });
-        return;
-      }
-      ticketDispatch({ type: 'email', valid: true });
-
       const response = await axios.post('/tickets/create-ticket', { email, ticket });
       setResponseStatus(response.status);
-      ticketDispatch({ type: 'noError' });
+
       console.log(response);
     } catch (error) {
+      // if (error.response === undefined) {
+      //   ticketDispatch({ type: undefined });
+      // } else {
       ticketDispatch({ type: error.response.status });
+      // }
     }
-    setState({ ticketCategory: '' });
-    setState({ subjectText: ' ' });
-    setState({ descriptionText: ' ' });
+    setState({
+      ticketCategory: '',
+      ticketPriority: 'Low',
+      ticketUrgency: 'Low',
+      subjectText: '',
+      descriptionText: '',
+    });
   };
 
   const clearClickHandler = (event) => {
