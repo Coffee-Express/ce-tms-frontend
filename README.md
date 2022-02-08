@@ -11,15 +11,14 @@ Simple issue tracking cloud application that showcases our skills using the MERN
 
 ## General Info
 
-This Ticket Management System (or TMS) is a cloud-based issue tracking application where users can communicate any bugs found within the product. User interface records the issue’s title, category, and the description which gives the company valuable information to resolve the bugs as quickly as possible.
+This Ticket Management System (or TMS) is a cloud-based issue tracking application where users can communicate any bugs found within the product. User interface records the issue’s title, category, and the description which gives the company valuable information to resolve the bugs as quickly as possible. Roles within the application are split into 3 categories, Users Employees and Managers.
+-	Users can create accounts to create new tickets and view their existing ones, however creating an account is not required to submit a ticket. Instead, the user just records their email address so you have a way of reaching them.
 
-Users can create accounts to create new tickets and view their existing ones, however creating an account is not required to submit a ticket.  Instead, the user just records their email address so you have a way of reaching them.  
+-	Employees can login to view created tickets and edit them. As the user's issue gets resolved, employees can update a ticket's status to reflect this. Currently, the available status values are: 'Submitted', 'In Progress', and 'Resolved'. Each time a ticket's status gets updated, the user will receive an email notification. In addition to updating the status, employees should update a ticket's urgency and priority fields. These fields allow your team to determine which issues should be tackled first. By default, the urgency and priority of each ticket is 'Low'. The available values for these fields are 'Low', 'Medium', and 'High'.
 
-Your employees can login to view created tickets and edit them.  As the user's issue gets resolved, employees can update a ticket's status to reflect this.  Currently, the available status values are: 'Submitted', 'In Progress', and 'Resolved'.  Each time a ticket's status gets updated, the user will receive an email notification.  In addition to updating the status, employees should update a ticket's urgency and priority fields.  These fields allow your team to determine which issues should be tackled first.  By default, the urgency and priority of each ticket is 'Low'.  The available values for these fields are 'Low', 'Medium', and 'High'.  
-
-Managers have all employee privileges in addition to the unique privileges of creating employees and deleting tickets.  Since they can serve as valuable information for an enterprise, we only recommend deleting tickets that were mistakenly created or contain inappropriate content.  
-
-When a manager creates an employee, they will receive an email with a one-time password that expires in 7 days.  On their first login to TMS, an employee will need to create a permanent one.  
+-	Managers have all employee privileges in addition to the unique privileges of creating employees and deleting tickets. Since they can serve as valuable information for an enterprise, we only recommend deleting tickets that were mistakenly created or contain inappropriate content.
+When a manager creates an employee, they will receive an email with a one-time password that expires in 7 days. On their first login to TMS, an employee will need to create a permanent one.
+  
 
 ## Technologies
 
