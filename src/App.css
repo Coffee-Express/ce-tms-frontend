@@ -2,6 +2,7 @@
   --purple: rgb(145, 34, 248);
   --heading-font-size: 32px;
   --body-font-size: 20px;
+  --red-error-fill: rgb(255, 181, 181);
 }
 
 body {

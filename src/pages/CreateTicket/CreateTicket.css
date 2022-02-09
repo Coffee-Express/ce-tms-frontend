@@ -125,33 +125,40 @@
 
  .status409 {
    border-color: red;
+   background-color: var(--red-error-fill);
  }
 
  .status500 {
   border-color: red;
+  background-color: var(--red-error-fill);
  }
 
 .noName {
   border-color: red;
+  background-color: var(--red-error-fill);
 }
 
 .noSubject {
   border-color: red;
+  background-color: var(--red-error-fill);
   
 }
 
 .noCategory{
   border-color: red;
+  background-color: var(--red-error-fill);
   
 }
 
 .noDescription{
   border-color: red;
+  background-color: var(--red-error-fill);
   
 }
  
  .noEmail {
   border-color: red;
+  background-color: var(--red-error-fill);
 }
 
 

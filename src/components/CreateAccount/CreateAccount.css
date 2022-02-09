@@ -80,26 +80,32 @@
 
  .status409 {
    border-color: red;
+   background-color: var(--red-error-fill);
  }
 
  .status500 {
   border-color: red;
+  background-color: var(--red-error-fill);
  }
 
 .noName {
   border-color: red;
+  background-color: var(--red-error-fill);
 }
  
  .invalidPassword {
   border-color: red;
+  background-color: var(--red-error-fill);
  }
 
  .passwordLength {
   border-color: red;
+  background-color: var(--red-error-fill);
  }
  
  .invalidEmail {
   border-color: red;
+  background-color: var(--red-error-fill);
 }
 
 
