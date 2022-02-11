@@ -16,6 +16,7 @@ const NavBar = () => {
   const [isEmployeeModalOpen, setIsEmployeeModalOpen] = useState(false);
   const [isPermanentPasswordModalOpen, setIsPermanentPasswordModalOpen] = useState(false);
   const [navbarContainerIsVisible, setNavbarContainerIsVisible] = useState(false);
+  // const [darkMode, setDarkMode] = useState(false);
   // const [navbarButtonDescriptionCSSClass, setNavbarButtonDescriptionCSSClass] = useState({
   //   createAccount: 'display-none',
   //   viewTickets: 'display-none',
@@ -60,6 +61,7 @@ const NavBar = () => {
       <button type="button" className="navbar-menu-button" onClick={() => setNavbarContainerIsVisible(!navbarContainerIsVisible)}>
         <FontAwesomeIcon icon={faBars} size="3x" />
       </button>
+
       <div className={`navbar-container ${navbarContainerIsVisible ? 'visibility-visible' : ''}`}>
         <nav className="navbar">
           {auth.user.email ? (
@@ -102,6 +104,10 @@ const NavBar = () => {
           )
             : (
               <>
+                <label className="switch">
+                  <input type="checkbox" />
+                  <span className="slider round" />
+                </label>
                 <button type="button" onClick={openLoginModal} className="navbar-button">
                   Login
                 </button>
