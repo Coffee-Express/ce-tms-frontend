@@ -156,9 +156,6 @@ const CreateTicket = () => {
         <p className="ticket-submitted-text">Ticket Sent</p>
       </div>
       {/* <h1 className="submit-ticket-heading">Have an issue? Let us know.</h1> */}
-      <p className="error-message-ticket">
-        {ticketErrorObject.message}
-      </p>
       <form className="form">
         <div className="form-element">
           <input id="subject-input" className={`form-input ${ticketErrorObject.subject}`} type="text" name="subjectText" value={state.subjectText || ''} onChange={handleChange} />
